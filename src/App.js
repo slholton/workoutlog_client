@@ -5,7 +5,6 @@ import Auth from './auth/Auth';
 function App() {
 
   const [sessionToken, setSessionToken] = useState('');
-
   useEffect(() => {
     if (localStorage.getItem('token')){
       setSessionToken(localStorage.getItem('token'));
@@ -18,9 +17,14 @@ function App() {
     console.log(sessionToken);
   }
 
+  const clearToken = () => {
+    localStorage.clear();
+    setSessionToken('');
+  }
+
   return (
     <div>
-      <Sitebar />
+      <Sitebar clickLogout={clearToken} />
       <Auth updateToken={updateToken}/>
     </div>
   );
