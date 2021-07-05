@@ -1,36 +1,36 @@
-import React, {useState} from 'react';
-import {Form, FormGroup, Label, Input, Button} from 'reactstrap';
+import React, { useState } from 'react';
+import { Form, FormGroup, Label, Input, Button } from 'reactstrap';
 
 const Login = (props) => {
-    const [username, setUsername] = useState(''); 
-    const [password, setPassword] = useState(''); 
+    const [username, setUsername] = useState('');
+    const [passwordhash, setPassword] = useState('');
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        fetch('http://localhost:3000/user/login',{
+        fetch('http://localhost:3000/user/login', {
             method: 'POST',
-            body: JSON.stringify({user:{username: username, password: password}}),
+            body: JSON.stringify({ user: { username: username, password: passwordhash } }),
             headers: new Headers({
                 'Content-Type': 'application/json/'
             })
-        }) .then(
+        }).then(
             (response) => response.json()
-        ) .then((data) => {
+        ).then((data) => {
             props.updateToken(data.sessionToken);
         })
     }
 
-    return(
+    return (
         <div>
             <h1>Login</h1>
             <Form onSubmit={handleSubmit}>
                 <FormGroup>
                     <Label htmlFor="username">Username</Label>
-                    <Input onChange={(e) => setUsername(e.target.value)} name="username" value={username}/> 
+                    <Input onChange={(e) => setUsername(e.target.value)} name="username" value={username} />
                 </FormGroup>
                 <FormGroup>
                     <Label htmlFor="password">Password</Label>
-                    <Input onChange={(e) => setPassword(e.target.value)} name="password" value={password}/> 
+                    <Input onChange={(e) => setPassword(e.target.value)} name="password" value={passwordhash} />
                 </FormGroup>
                 <Button type="submit">Login</Button>
             </Form>
